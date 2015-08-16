@@ -1,13 +1,19 @@
-class Code
+class Code < Array
   PEGS = %w(orange blue cyan green purple red)
 
-  attr_reader :length
-
-  def initialize(length)
+  def initialize(pegs: [], length: 0)
     @length = length
+
+    pegs.each do |peg|
+      self << peg
+    end
   end
 
-  def to_a
-    (1..length).map { PEGS.sample }
+  def random
+    (self << (1..length).map { PEGS.sample }).flatten
   end
+
+  private
+
+  attr_reader :length
 end

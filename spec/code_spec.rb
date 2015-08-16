@@ -2,17 +2,16 @@ require 'spec_helper'
 require_relative '../code.rb'
 
 describe Code do
-  it 'can be represented as an array' do
-    code = described_class.new(2)
+  it 'can be initialized manually' do
+    code = described_class.new(pegs: %w(blue red))
 
-    expect(code.to_a.class).to eq(Array)
+    expect(code).to eq(%w(blue red))
   end
 
-  it 'has variable length' do
-    [1,2].each do |length|
-      code = Code.new(length)
+  it 'can be randomized' do
+    stub_const("Code::PEGS", %w(green blue))
+    random_code = described_class.new(length: 2).random
 
-      expect(code.to_a.size).to eq(length)
-    end
+    expect([%w(green green), %w(green blue), %w(blue green), %w(blue blue)]).to include(random_code)
   end
 end
